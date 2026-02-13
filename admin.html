@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin - Triswad</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-left">
+    <div class="logo">Triswad</div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="cart.html" class="cart-icon">🛒<span id="cartCount">0</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="cart-section" style="max-width:500px;margin:auto;margin-top:50px;">
+  <h2 class="cart-title">Add Product</h2>
+  <form id="productForm">
+    <input type="text" id="name" placeholder="Product Name" required style="width:100%;padding:10px;margin:10px 0;">
+    <input type="text" id="image" placeholder="Image URL" required style="width:100%;padding:10px;margin:10px 0;">
+    <textarea id="options" placeholder='Options JSON e.g. [{"weight":"100 gm","price":120}]' required style="width:100%;padding:10px;margin:10px 0;"></textarea>
+    <button type="submit">Add Product</button>
+  </form>
+</section>
+
+<script>
+document.getElementById('productForm').addEventListener('submit', async(e)=>{
+  e.preventDefault();
+  const token = localStorage.getItem('token');
+  if(!token) return alert('Login as admin');
+
+  const name = document.getElementById('name').value;
+  const image = document.getElementById('image').value;
+  let options;
+  try{ options = JSON.parse(document.getElementById('options').value); }
+  catch(err){ return alert('Invalid JSON'); }
+
+  try{
+    const res = await fetch('http://localhost:5000/api/products/add',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+      body:JSON.stringify({name,image,options})
+    });
+    const data = await res.json();
+    if(res.ok) alert('Product added');
+    else alert(data.msg);
+  } catch(err){ alert('Server error'); }
+});
+</script>
+
+</body>
+</html>

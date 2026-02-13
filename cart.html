@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">app.use(express.static('..'));const path = require('path');
+app.use(express.static(path.join(__dirname, '../frontend')));
+<head>
+<meta charset="UTF-8">
+<title>Triswad Cart</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-left">
+    <div class="logo">Triswad</div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="cart.html" class="cart-icon">🛒<span id="cartCount">0</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="cart-section">
+  <h2 class="cart-title">🛒 My Shopping Cart</h2>
+  <div id="cart-items" class="cart-items"></div>
+  <p id="empty-cart" class="empty-cart">Your cart is empty 😔</p>
+
+  <div class="cart-summary">
+    <h3>Total: ₹<span id="total-amount">0</span></h3>
+    <button class="checkout-btn" onclick="checkout()">Proceed To Checkout</button>
+  </div>
+</section>
+
+<footer>© 2026 Triswad</footer>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="js/cart.js"></script>
+
+</body>
+</html>
